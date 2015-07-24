@@ -15,58 +15,75 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
+/* Version 1.0 Issues
+    - operand_array[1] is coming up undefined. number_index shows 1 in my console.
+    - operand_array[0] becomes NaN after operator or second digit is pressed.
+*/
+        var operand_array = ["",""];
+        var number_index = 0;
+        var operator_sym = "";
+        var newNum = "";
+
         $(document).ready(function() { //Needed for jQuery
-            $("#add_button").click(function(){ //self-invoking function, & anonymous
-                console.log('add button clicked');
-                var number0_val = $('#number_0').val();
-                var number1_val = $('#number_1').val();
-                add(number0_val, number1_val);
-                $('#operator').text('+');
-            });
-            $('#sub_button').click(function(){
-                 var number0_val = $('#number_0').val();
-                 var number1_val = $('#number_1').val();
-                 sub(number0_val, number1_val);
-                 $('#operator').text("-");
-            });
-            $('#mul_button').click(function(){
-                 var number0_val = $('#number_0').val();
-                 var number1_val = $('#number_1').val();
-                 mul(number0_val, number1_val);
-                 $('#operator').text("*");
-            });
-            $('#divi_button').click(function(){
-                 var number0_val = $('#number_0').val();
-                 var number1_val = $('#number_1').val();
-                 divi(number0_val, number1_val);
-                 $('#operator').text("/");
-            });
+            operand_array[0] = $('#number_0').val();
+            operand_array[1] = $('#number_1').val();
         });
-// OPERATORS
+// NUMBER INPUT
+        function input_digit(digit){
+            console.log('Clicked Button:', digit);
+            var number0_val = $('#oper_display').val();
+            newNum = number0_val + digit;
+            $('#oper_display').val(newNum);
+            operand_array[0] = Number(newNum);
+            console.log("operand_array[number_index]", operand_array[number_index], 'number index', number_index, 'operand_array[0]', operand_array[0] ,"operand_array[1]", operand_array[1]);
+        };
+// OPERATOR INPUT
+        function operator(operator_sym){
+            console.log('operator clicked', operator_sym, 'opperand_array[0]', operand_array[0]);
+            sign = operator_sym
+            set1 = operand_array[0] + operator_sym
+            $('#oper_display').val(set1);
+            console.log("sign", sign, 'set1: ', set1);
+            number_index = 1;
+        }
+// CALCULATE
+        function calculate (num1, num2) {
+            console.log('equal button clicked');
+            var num1 = Number(operand_array[0]);
+            var num2 = Number(operand_array[1]);
+            switch (operator) {
+                case "+":
+                    var result = add(num1, num2);
+                    break;
+                case "-":
+                    var result = sub(num1, num2)
+                    break;
+                case "*":
+                    var result = mul(num1, num2);
+                    break;
+                case "/":
+                    var result = divi(num1, num2);
+                    break;
+            };
+            $('#result_display').val(result);
+        };
+// OPERATOR FUNCTIONS
         function add(operand1, operand2){
             var result = Number(operand1) + Number(operand2);
-            $('#result_display').val(result);
+            number_index = 1;
         };
         function sub(operand1, operand2){
             var result = Number(operand1) - Number(operand2);
-            $('#result_display').val(result);
+            number_index = 1;
         };
         function mul(operand1, operand2){
             var result = Number(operand1) * Number(operand2);
-            $('#result_display').val(result);
+            number_index = 1;
         };
         function divi(operand1, operand2){
             var result = Number(operand1) / Number(operand2);
-            $('#result_display').val(result);
+            number_index = 1;
         };
-// NUMBERS
-        function input_digit(digit){
-            console.log('Clicked Button:', digit);
-            var result = $('#oper_display').val();
-            var newNum = result + digit;
-            $('#oper_display').val(newNum);
-        };
-
     </script>
 </head>
 <body>
@@ -74,14 +91,13 @@
     <br>
     <input type="text" id="result_display" placeholder="Result">
     <!--<input id="number_0" placeholder="number 0" type="text">-->
-    <!--<span id="operator">+</span>-->
     <!--<input id="number_1" placeholder="number 1" type="text">-->
     <div class="operator_bay">
-        <button id="result_button" type="button">=</button>
-        <button id="add_button" type="button">+</button>
-        <button id="sub_button" type="button">-</button>
-        <button id="mul_button" type="button">*</button>
-        <button id="divi_button" type="button">/</button>
+        <button type="button" id="result_button" onclick="calculate()">=</button>
+        <button type="button"  id="add_button" onclick="operator('+')">+</button>
+        <button type="button" id="sub_button" onclick="operator('-')">-</button>
+        <button type="button" id="mul_button" onclick="operator('*')">*</button>
+        <button type="button" id="divi_button" onclick="operator('/')">/</button>
     </div>
     <div class="number_bay">
         <button type="button" onclick="input_digit(1)">1</button>
