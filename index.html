@@ -28,46 +28,69 @@
             operand_array[0] = $('#number_0').val();
             operand_array[1] = $('#number_1').val();
         });
-// NUMBER INPUT
+/**************
+ * Function: Number Input
+ * Purpose: On click number appears in display & should also store in designated array position
+ * Params:
+ * Returns:
+ **************/
+//DWP THIS ONE
         function input_digit(digit){
-            console.log('Clicked Button:', digit);
-            var number0_val = $('#oper_display').val();
-            newNum = number0_val + digit;
-            $('#oper_display').val(newNum);
-            operand_array[0] = Number(newNum);
-            console.log("operand_array[number_index]", operand_array[number_index], 'number index', number_index, 'operand_array[0]', operand_array[0] ,"operand_array[1]", operand_array[1]);
+            console.log('Clicked Button:', digit);                                                                  // Console log the variables going into the function
+            var number0_val = $('#oper_display').val();                                                             // Assigns variable to the incoming digit(s)
+            newNum = number0_val + digit;                                                                           // Assigns variable to the above variable & concatenates the new digit
+            $('#oper_display').val(newNum);                                                                         // Displays the newly assigned variable in the operand_display
+            operand_array[0] = Number(newNum);                                                                      // Assigns the operand_array position 0 to the number value of the above variable
+            console.log("operand_array[number_index]", operand_array[number_index], 'number index', number_index,   // Console.log all ALLEGEDLY assigned variables
+                    'operand_array[0]', operand_array[0] ,"operand_array[1]", operand_array[1]);
         };
-// OPERATOR INPUT
+/**************
+ * Function: Operator Input
+ * Purpose: On click operator appears in display & also stores as a variable to used in calculate();
+ * Params:
+ * Returns:
+ **************/
+//DWP THIS ONE
         function operator(operator_sym){
-            console.log('operator clicked', operator_sym, 'opperand_array[0]', operand_array[0]);
-            sign = operator_sym
-            set1 = operand_array[0] + operator_sym
-            $('#oper_display').val(set1);
-            console.log("sign", sign, 'set1: ', set1);
-            number_index = 1;
+            console.log('operator clicked', operator_sym, 'operand_array[0]', operand_array[0]);    // Console log the variables going into the function
+            sign = operator_sym                                                                     // Assigns variable to incoming operator symbol
+            set1 = operand_array[0] + operator_sym                                                  // Assigns variable to operand_array[0] & concatenates the operator symbol
+            $('#oper_display').val(set1);                                                           // Displays new variable in oper_display
+            console.log("sign", sign, 'set1: ', set1);                                              // Console logs variables being set
+            number_index = 1;                                                                       // Switches the number index to position 1 of the operand_array
         }
-// CALCULATE
+/**************
+ * Function: Calculate
+ * Purpose: On click equal button (=), the calculate() function runs & displays the result in the result display
+ * Params:
+ * Returns:
+ **************/
         function calculate (num1, num2) {
-            console.log('equal button clicked');
-            var num1 = Number(operand_array[0]);
-            var num2 = Number(operand_array[1]);
-            switch (operator) {
-                case "+":
-                    var result = add(num1, num2);
-                    break;
-                case "-":
-                    var result = sub(num1, num2)
-                    break;
-                case "*":
-                    var result = mul(num1, num2);
-                    break;
-                case "/":
-                    var result = divi(num1, num2);
-                    break;
-            };
-            $('#result_display').val(result);
+            console.log('equal button clicked');    // When equal button is clicked, console.log success
+            num1 = Number(operand_array[0]);        // Assigns variable "num1" to the operand_array's position "0" number value
+            num2 = Number(operand_array[1]);        // Assigns variable "num2" to the operand_array's position "1" number value
+            switch (operator) {                     // Begins Switch Statement
+                case "+":                           // If the array contains a "+' sign, this add function is called. num1 & num2 get passed
+                    var result = add(num1, num2);   // Assigns variable "result" to the called add function
+                    break;                          // Breaks & drops the function out after add function result returned
+                case "-":                           // If the array contains a "-' sign, this sub function is called. Num1 & num2 get passed
+                    var result = sub(num1, num2);   // Assigns variable "result" to the called sub function
+                    break;                          // Breaks & drops the function out after sub function result returned
+                case "*":                           // If the array contains a "*' sign, this multiply function is called. Num1 & num2 get passed
+                    var result = mul(num1, num2);   // Assigns variable "result" to the called multiply function
+                    break;                          // Breaks & drops the function out after multiply function result returned
+                case "/":                           // If the array contains a "/' sign, this divide function is called. num1 & num2 get passed
+                    var result = divi(num1, num2);  // Assigns variable "result" to the called divide function
+                    break;                          // Breaks & drops the function out after divide function result returned
+            };                                      // Closes Switch Statement
+            $('#result_display').val(result);       // Displays the result of the operation performed in result_display
         };
-// OPERATOR FUNCTIONS
+/**************
+ * Function: Operation Functions
+ * Purpose: To run during switch in calculate(); to get equation results
+ * Params:
+ * Returns:
+ **************/
         function add(operand1, operand2){
             var result = Number(operand1) + Number(operand2);
             number_index = 1;
@@ -90,8 +113,6 @@
     <input type="text" id="oper_display" placeholder="Ready">
     <br>
     <input type="text" id="result_display" placeholder="Result">
-    <!--<input id="number_0" placeholder="number 0" type="text">-->
-    <!--<input id="number_1" placeholder="number 1" type="text">-->
     <div class="operator_bay">
         <button type="button" id="result_button" onclick="calculate()">=</button>
         <button type="button"  id="add_button" onclick="operator('+')">+</button>
